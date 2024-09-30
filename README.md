@@ -44,10 +44,10 @@ const MainnetSDK = new CetusBurnSDK(burn_mainnet)
 });
 ```
 
-- **Mainnet**: 
+- **Testnet**: 
 
 ```typescript
-export const burn_mainnet: SdkOptions = {
+export const burn_testnet: SdkOptions = {
   fullRpcUrl: 'https://sui-testnet-endpoint.blockvision.org',
   simulationAccount: {
     address: '0x...',
@@ -60,7 +60,7 @@ export const burn_mainnet: SdkOptions = {
     clmm_global_vault_id: '0xf3114a74d54cbe56b3e68f9306661c043ede8c6615f0351b0c3a93ce895e1699',
   }
 }
-const MainnetSDK = new CetusBurnSDK(burn_mainnet)
+const TestnetSDK = new CetusBurnSDK(burn_testnet)
 });
 ```
 
