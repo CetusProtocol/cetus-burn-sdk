@@ -6,12 +6,12 @@ export const burn_testnet: SdkOptions = {
     address: '0xcd0247d0b67e53dde69b285e7a748e3dc390e8a5244eb9dd9c5c53d95e4cf0aa',
   },
   burn: {
-    package_id: '0xa30fd3413b56173930bc1c66defb0f9a0a6af407ac31dc6f27afae800d9a7cf9',
-    published_at: '0xa30fd3413b56173930bc1c66defb0f9a0a6af407ac31dc6f27afae800d9a7cf9',
-    manager_id: '0xd1214ad679070438292b78537cf7965202fd67afa26a73caac6a429b7e58c3b4',
-    clmm_global_config: '0x6f4149091a5aea0e818e7243a13adcfb403842d670b9a2089de058512620687a',
-    clmm_global_vault_id: '0xf3114a74d54cbe56b3e68f9306661c043ede8c6615f0351b0c3a93ce895e1699',
-    burn_pool_handle:"0x8aa61eef2ac1f3172e21aed28343f7c6c633227bfdcc811b6494302959e56980"
+    package_id: '0x3b494006831b046481c8046910106e2dfbe0d1fa9bc01e41783fb3ff6534ed3a',
+    published_at: '0x3b494006831b046481c8046910106e2dfbe0d1fa9bc01e41783fb3ff6534ed3a',
+    manager_id: '0xd04529ef15b7dad6699ee905daca0698858cab49724b2b2a1fc6b1ebc5e474ef',
+    clmm_global_config: '0x9774e359588ead122af1c7e7f64e14ade261cfeecdb5d0eb4a5b3b4c8ab8bd3e',
+    clmm_global_vault_id: '0xf78d2ee3c312f298882cb680695e5e8c81b1d441a646caccc058006c2851ddea',
+    burn_pool_handle: "0x20262dac8853ab8f63c98e0b17bfb1c758efc33d0092ac3c5f204dfb7ba81ac5"
   }
 }
 
