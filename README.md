@@ -34,10 +34,11 @@ export const burn_mainnet: SdkOptions = {
   },
   burn: {
     package_id: '0x12d73de9a6bc3cb658ec9dc0fe7de2662be1cea5c76c092fcc3606048cdbac27',
-    published_at: '0x12d73de9a6bc3cb658ec9dc0fe7de2662be1cea5c76c092fcc3606048cdbac27',
+    published_at: '0xb92ae17938cde6d856ee39c686d4cfb968c94155e59e24520fbf60de38ebcd21',
     manager_id: '0x1d94aa32518d0cb00f9de6ed60d450c9a2090761f326752ffad06b2e9404f845',
     clmm_global_config: '0xdaa46292632c3c4d8f31f23ea0f9b36a28ff3677e9684980e4438403a67a3d8f',
     clmm_global_vault_id: '0xce7bceef26d3ad1f6d9b6f13a953f053e6ed3ca77907516481ce99ae8e588f2b',
+    burn_pool_handle: '0xc9aacf74bd7cc8da8820ae28ca4473b7e01c87be19bc35bf81c9c7311e1b299e',
   }
 }
 const MainnetSDK = new CetusBurnSDK(burn_mainnet)
@@ -53,11 +54,12 @@ export const burn_testnet: SdkOptions = {
     address: '0x...',
   },
   burn: {
-    package_id: '0xa30fd3413b56173930bc1c66defb0f9a0a6af407ac31dc6f27afae800d9a7cf9',
-    published_at: '0xa30fd3413b56173930bc1c66defb0f9a0a6af407ac31dc6f27afae800d9a7cf9',
-    manager_id: '0xd1214ad679070438292b78537cf7965202fd67afa26a73caac6a429b7e58c3b4',
-    clmm_global_config: '0x6f4149091a5aea0e818e7243a13adcfb403842d670b9a2089de058512620687a',
-    clmm_global_vault_id: '0xf3114a74d54cbe56b3e68f9306661c043ede8c6615f0351b0c3a93ce895e1699',
+   package_id: '0x3b494006831b046481c8046910106e2dfbe0d1fa9bc01e41783fb3ff6534ed3a',
+    published_at: '0x3b494006831b046481c8046910106e2dfbe0d1fa9bc01e41783fb3ff6534ed3a',
+    manager_id: '0xd04529ef15b7dad6699ee905daca0698858cab49724b2b2a1fc6b1ebc5e474ef',
+    clmm_global_config: '0x9774e359588ead122af1c7e7f64e14ade261cfeecdb5d0eb4a5b3b4c8ab8bd3e',
+    clmm_global_vault_id: '0xf78d2ee3c312f298882cb680695e5e8c81b1d441a646caccc058006c2851ddea',
+    burn_pool_handle: "0x20262dac8853ab8f63c98e0b17bfb1c758efc33d0092ac3c5f204dfb7ba81ac5"
   }
 }
 const TestnetSDK = new CetusBurnSDK(burn_testnet)
