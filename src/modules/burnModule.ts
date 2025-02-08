@@ -1,4 +1,4 @@
-import { Transaction } from '@mysten/sui/transactions'
+import { Transaction, TransactionObjectArgument } from '@mysten/sui/transactions'
 import { IModule } from '../interfaces/IModule'
 import { CetusBurnSDK } from '../sdk'
 import { BurnParams, CollectFeeParams, CollectRewardParams } from '../types/burn'
@@ -169,12 +169,38 @@ export class BurnModule implements IModule {
   createBurnPayload(params: BurnParams, tx?: Transaction) {
     tx = tx || new Transaction()
 
+    const positionArg = typeof params.pos === 'string' ? tx.object(params.pos) : params.pos
+
     const { published_at, manager_id } = this._sdk.sdkOptions.burn
     const target = `${published_at}::lp_burn::burn`
     tx.moveCall({
       target,
-      arguments: [tx.object(manager_id), tx.object(params.pool), tx.object(params.pos)],
+      arguments: [tx.object(manager_id), tx.object(params.pool), positionArg],
       typeArguments: [params.coinTypeA, params.coinTypeB],
+    })
+
+    return tx
+  }
+
+  /**
+   * Creates a transaction payload for burning an LP position.
+   *
+   * @param {string | TransactionObjectArgument} pos - The LP position to be burned,
+   *        either as an object argument or its ID (string).
+   * @param {Transaction} [tx] - An optional `Transaction` object; if not provided, a new one is created.
+   * @returns {Transaction} - The transaction object containing the `burn_lp_v2` method call.
+   */
+  createBurnLPV2Payload(pos: string | TransactionObjectArgument, tx?: Transaction) {
+    tx = tx || new Transaction()
+
+    const positionArg = typeof pos === 'string' ? tx.object(pos) : pos
+
+    const { published_at, manager_id } = this._sdk.sdkOptions.burn
+    const target = `${published_at}::lp_burn::burn_lp_v2`
+    tx.moveCall({
+      target,
+      arguments: [tx.object(manager_id), positionArg],
+      typeArguments: [],
     })
 
     return tx
@@ -196,7 +222,6 @@ export class BurnModule implements IModule {
       arguments: [tx.object(manager_id), tx.object(clmm_global_config), tx.object(params.pool), tx.object(params.pos)],
       typeArguments: [params.coinTypeA, params.coinTypeB],
     })
-
     tx.transferObjects([coins[0]], tx.pure.address(params.account))
     tx.transferObjects([coins[1]], tx.pure.address(params.account))
 
@@ -230,6 +255,65 @@ export class BurnModule implements IModule {
       })
 
       tx.transferObjects([coin], tx.pure.address(params.account))
+    }
+
+    return tx
+  }
+
+  /**
+   * @description Create a collect fee payload for a given pool and position.
+   * @param params - The collect fee parameters.
+   * @param tx - The transaction object.
+   * @returns
+   */
+  createCollectFeesPaylaod(params: CollectFeeParams[], tx?: Transaction) {
+    tx = tx || new Transaction()
+    const { published_at, manager_id, clmm_global_config } = this._sdk.sdkOptions.burn
+    const target = `${published_at}::lp_burn::collect_fee`
+
+    for (let i = 0; i < params.length; i++) {
+      const item = params[i]
+      const coins = tx.moveCall({
+        target,
+        arguments: [tx.object(manager_id), tx.object(clmm_global_config), tx.object(item.pool), tx.object(item.pos)],
+        typeArguments: [item.coinTypeA, item.coinTypeB],
+      })
+      tx.transferObjects([coins[0]], tx.pure.address(item.account))
+      tx.transferObjects([coins[1]], tx.pure.address(item.account))
+    }
+
+    return tx
+  }
+
+  /**
+   * @description Create a collect reward payload for a given pool and position.
+   * @param params - The collect reward parameters.
+   * @param tx - The transaction object.
+   * @returns
+   */
+  crateCollectRewardsPayload(params: CollectRewardParams[], tx?: Transaction) {
+    tx = tx || new Transaction()
+    const { published_at, manager_id, clmm_global_config, clmm_global_vault_id } = this._sdk.sdkOptions.burn
+    const target = `${published_at}::lp_burn::collect_reward`
+    for (let j = 0; j < params.length; j++) {
+      const item = params[j]
+      for (let i = 0; i < item.rewarderCoinTypes?.length; i++) {
+        const items = item.rewarderCoinTypes?.[i]
+        const coin = tx.moveCall({
+          target,
+          arguments: [
+            tx.object(manager_id),
+            tx.object(clmm_global_config),
+            tx.object(item.pool),
+            tx.object(item.pos),
+            tx.object(clmm_global_vault_id),
+            tx.object(CLOCK_ADDRESS),
+          ],
+          typeArguments: [item.coinTypeA, item.coinTypeB, items],
+        })
+
+        tx.transferObjects([coin], tx.pure.address(item.account))
+      }
     }
 
     return tx

@@ -177,6 +177,19 @@ const simulateRes = await sdk.fullClient.devInspectTransactionBlock({
 ```
 
 
+### 6. burn LP position
+This method creates a transaction builder for a burning an LP position.
+```typescript
+const pos = '0x4e1970683fc49de834478339724509a051764e7f34d55b4dc4d2a37b7034669c' // is burn success
+const txb = await sdk.Burn.createBurnLPV2Payload(pos)
+
+const simulateRes = await sdk.fullClient.devInspectTransactionBlock({
+    transactionBlock: txb,
+    sender: account,
+})
+```
+
+
 # More About Cetus
 
 Use the following links to learn more about Cetus:
