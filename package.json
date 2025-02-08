@@ -1,6 +1,6 @@
 {
   "name": "@cetusprotocol/cetus-burn-sdk",
-  "version": "0.1.1",
+  "version": "0.1.6",
   "description": "Cetus Burn SDK",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
