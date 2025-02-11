@@ -15,13 +15,6 @@ export type SdkOptions = {
   fullRpcUrl: string
 
   burn: burnConfigs
-
-  simulationAccount: {
-    /**
-     * The address of the simulation account.
-     */
-    address: string
-  }
 }
 
 /**

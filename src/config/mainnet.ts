@@ -1,4 +1,4 @@
-import CetusBurnSDK, { SdkOptions } from '../../src'
+import CetusBurnSDK, { SdkOptions } from '../main'
 
 export const burn_mainnet: SdkOptions = {
   fullRpcUrl: 'https://fullnode.mainnet.sui.io',
@@ -13,3 +13,16 @@ export const burn_mainnet: SdkOptions = {
 }
 
 export const MainnetSDK = new CetusBurnSDK(burn_mainnet)
+
+/**
+ * Initialize the mainnet SDK
+ * @param fullNodeUrl. If provided, it will be used as the full node URL.
+ * @returns
+ */
+export function initMainnetSDK(fullNodeUrl?: string): CetusBurnSDK {
+  if (fullNodeUrl) {
+    burn_mainnet.fullRpcUrl = fullNodeUrl
+  }
+  const sdk = new CetusBurnSDK(burn_mainnet)
+  return sdk
+}

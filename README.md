@@ -1,5 +1,5 @@
 # Cetus LP Burn SDK
-## What is Cetus LP Burn ?
+## What Cetus LP Burn SDK ?
 The primary functionality of this project, nominally referred to as "LP Burn," is essentially designed for users who wish to permanently lock their liquidity positions.  Once locked, the liquidity within these positions cannot be withdrawn, yet users retain the ability to claim any transaction fees and mining rewards generated from these positions.  This locking mechanism is implemented by wrapping the original position, effectively sealing the liquidity while still allowing the accrual of rewards.
 The Cetus LP Burn SDK is particularly tailored for projects that have established liquidity pools and wish to relinquish their liquidity rights.  This feature allows these projects to commit to their community and ecosystem by locking liquidity permanently, thus providing stability and trust in the liquidity pool's longevity.
 
@@ -27,43 +27,13 @@ Initialize the SDK with the necessary configuration parameters. Typically, this 
 - **Mainnet**: 
 
 ```typescript
-export const burn_mainnet: SdkOptions = {
-  fullRpcUrl: 'https://sui-testnet-endpoint.blockvision.org',
-  simulationAccount: {
-    address: '0x...',
-  },
-  burn: {
-    package_id: '0x12d73de9a6bc3cb658ec9dc0fe7de2662be1cea5c76c092fcc3606048cdbac27',
-    published_at: '0xb92ae17938cde6d856ee39c686d4cfb968c94155e59e24520fbf60de38ebcd21',
-    manager_id: '0x1d94aa32518d0cb00f9de6ed60d450c9a2090761f326752ffad06b2e9404f845',
-    clmm_global_config: '0xdaa46292632c3c4d8f31f23ea0f9b36a28ff3677e9684980e4438403a67a3d8f',
-    clmm_global_vault_id: '0xce7bceef26d3ad1f6d9b6f13a953f053e6ed3ca77907516481ce99ae8e588f2b',
-    burn_pool_handle: '0xc9aacf74bd7cc8da8820ae28ca4473b7e01c87be19bc35bf81c9c7311e1b299e',
-  }
-}
-const MainnetSDK = new CetusBurnSDK(burn_mainnet)
-});
+const MainnetSDK = initBurnSDK({ network: 'mainnet'})
 ```
 
 - **Testnet**: 
 
 ```typescript
-export const burn_testnet: SdkOptions = {
-  fullRpcUrl: 'https://sui-testnet-endpoint.blockvision.org',
-  simulationAccount: {
-    address: '0x...',
-  },
-  burn: {
-   package_id: '0x3b494006831b046481c8046910106e2dfbe0d1fa9bc01e41783fb3ff6534ed3a',
-    published_at: '0x3b494006831b046481c8046910106e2dfbe0d1fa9bc01e41783fb3ff6534ed3a',
-    manager_id: '0xd04529ef15b7dad6699ee905daca0698858cab49724b2b2a1fc6b1ebc5e474ef',
-    clmm_global_config: '0x9774e359588ead122af1c7e7f64e14ade261cfeecdb5d0eb4a5b3b4c8ab8bd3e',
-    clmm_global_vault_id: '0xf78d2ee3c312f298882cb680695e5e8c81b1d441a646caccc058006c2851ddea',
-    burn_pool_handle: "0x20262dac8853ab8f63c98e0b17bfb1c758efc33d0092ac3c5f204dfb7ba81ac5"
-  }
-}
-const TestnetSDK = new CetusBurnSDK(burn_testnet)
-});
+const MainnetSDK = initBurnSDK({ network: 'testnet'})
 ```
 
 
@@ -176,9 +146,8 @@ const simulateRes = await sdk.fullClient.devInspectTransactionBlock({
     })
 ```
 
-
-### 6. burn LP position
-This method creates a transaction builder for a burning an LP position.
+### 4. burn LP position
+When the position is burned, a CetusLPBurnProof will be returned. Compared to the burn_lp function, this V2 version does not require the pool object as a parameter, making it more convenient to use. The function will automatically verify the position's validity through the position object itself. This design also allows users to create a pool, add liquidity, and burn the position all within one transaction.
 ```typescript
 const pos = '0x4e1970683fc49de834478339724509a051764e7f34d55b4dc4d2a37b7034669c' // is burn success
 const txb = await sdk.Burn.createBurnLPV2Payload(pos)

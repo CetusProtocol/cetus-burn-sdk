@@ -3,6 +3,7 @@ import { Ed25519Keypair } from '@mysten/sui/keypairs/ed25519'
 import { SdkEnv, buildSdk, buildTestAccount } from './data/init_test_data'
 describe('burn', () => {
   const sdk = buildSdk(SdkEnv.mainnet)
+  console.log('🚀 ~ describe ~ sdk:', sdk)
   let sendKeypair: Ed25519Keypair
   let account: string
 

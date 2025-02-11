@@ -183,7 +183,10 @@ export class BurnModule implements IModule {
   }
 
   /**
-   * Creates a transaction payload for burning an LP position.
+   * When the position is burned, a CetusLPBurnProof will be returned. Compared to the burn_lp function,
+   * this V2 version does not require the pool object as a parameter, making it more convenient to use.
+   * The function will automatically verify the position's validity through the position object itself.
+   * This design also allows users to create a pool, add liquidity, and burn the position all within one transaction.
    *
    * @param {string | TransactionObjectArgument} pos - The LP position to be burned,
    *        either as an object argument or its ID (string).
